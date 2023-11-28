@@ -6,7 +6,6 @@ const App = () => {
 
   const [searchTerm, setSearchTerm] = useState('');
   const [searchResults, setSearchResults] = useState([]);
-  const [bookData,setData]=useState([]);
 
   const handleSearch = async () => {
     try {
@@ -40,8 +39,8 @@ const App = () => {
         {searchResults.map((book) => (
           <div key={book.id}>{book.volumeInfo.title}</div>
         ))}
-  
       </div>
+      
     </div>
   );
 }
