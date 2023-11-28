@@ -1,91 +1,15 @@
-import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Route, Link, Routes } from 'react-router-dom'; 
-import axios from 'axios';
-import BookDetails from './BookDetails';
+// App.js
+import React from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import HomePage from './Components/HomePage';
+import BookDetails from './Components/BookDetails';
 
 const App = () => {
-  const [searchTerm, setSearchTerm] = useState('');
-  const [searchResults, setSearchResults] = useState([]);
-  const [randomBooks, setRandomBooks] = useState([]);
-
-  useEffect(() => {
-    const fetchRandomBooks = async () => {
-      try {
-        const response = await axios.get(
-          'https://www.googleapis.com/books/v1/volumes?q=book&maxResults=18'
-        );
-
-        const shuffledResults = response.data.items.sort(() => 0.5 - Math.random()).slice(0, 18);
-
-        setRandomBooks(shuffledResults);
-      } catch (error) {
-        console.error('Error fetching random books:', error);
-      }
-    };
-
-    fetchRandomBooks();
-  }, []);
-
-  const handleSearch = async () => {
-    try {
-      const response = await axios.get(
-        `https://www.googleapis.com/books/v1/volumes?q=${searchTerm}`
-      );
-
-      setSearchResults(response.data.items);
-    } catch (error) {
-      console.error('Error fetching data from Google Books API:', error);
-    }
-  };
-
-  const handleKeyDown = (e) => {
-    if (e.key === 'Enter') {
-      handleSearch();
-    }
-  };
-
   return (
     <Router>
       <div className='app'>
-        <div className="header">
-          <div className="search">
-            <input
-              type='text'
-              placeholder='Search book'
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              onKeyDown={handleKeyDown}
-            />
-          </div>
-        </div>
-
-        <div className="container">
-          {searchResults.length === 0 && randomBooks.map((book) => (
-            <Link key={book.id} to={`/books/${book.id}`} className='book-info'>
-              <img
-                src={book.volumeInfo.imageLinks?.thumbnail || ''}
-                alt={book.volumeInfo.title}
-                className='book-cover'
-              />
-              <h3>{book.volumeInfo.title}</h3>
-              <h5>{book.volumeInfo.authors}</h5>
-            </Link>
-          ))}
-
-          {searchResults.map((book) => (
-            <Link key={book.id} to={`/books/${book.id}`} className='book-info'>
-              <img
-                src={book.volumeInfo.imageLinks?.thumbnail || ''}
-                alt={book.volumeInfo.title}
-                className='book-cover'
-              />
-              <h3>{book.volumeInfo.title}</h3>
-              <h5>{book.volumeInfo.authors}</h5>
-            </Link>
-          ))}
-        </div>
-
         <Routes>
+          <Route path="/" element={<HomePage />} />
           <Route path="/books/:bookId" element={<BookDetails />} />
         </Routes>
       </div>
