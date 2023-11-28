@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import { BrowserRouter as Router, Route, Link, Routes } from 'react-router-dom'; 
 import axios from 'axios';
-import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom';
 import BookDetails from './BookDetails';
 
 const App = () => {
@@ -46,46 +46,49 @@ const App = () => {
 
   return (
     <Router>
-    <div className='app'>
-      <div className="header">
-        <div className="search">
-          <input
-            type='text'
-            placeholder='Search book'
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            onKeyDown={handleKeyDown}
-          />
+      <div className='app'>
+        <div className="header">
+          <div className="search">
+            <input
+              type='text'
+              placeholder='Search book'
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              onKeyDown={handleKeyDown}
+            />
+          </div>
         </div>
+
+        <div className="container">
+          {searchResults.length === 0 && randomBooks.map((book) => (
+            <Link key={book.id} to={`/books/${book.id}`} className='book-info'>
+              <img
+                src={book.volumeInfo.imageLinks?.thumbnail || ''}
+                alt={book.volumeInfo.title}
+                className='book-cover'
+              />
+              <h3>{book.volumeInfo.title}</h3>
+              <h5>{book.volumeInfo.authors}</h5>
+            </Link>
+          ))}
+
+          {searchResults.map((book) => (
+            <Link key={book.id} to={`/books/${book.id}`} className='book-info'>
+              <img
+                src={book.volumeInfo.imageLinks?.thumbnail || ''}
+                alt={book.volumeInfo.title}
+                className='book-cover'
+              />
+              <h3>{book.volumeInfo.title}</h3>
+              <h5>{book.volumeInfo.authors}</h5>
+            </Link>
+          ))}
+        </div>
+
+        <Routes>
+          <Route path="/books/:bookId" element={<BookDetails />} />
+        </Routes>
       </div>
-
-      <div className="container">
-        {searchResults.length === 0 && randomBooks.map((book) => (
-          <div key={book.id} className='book-info'>
-            <img
-              src={book.volumeInfo.imageLinks?.thumbnail || ''}
-              alt={book.volumeInfo.title}
-              className='book-cover'
-            />
-            <h3>{book.volumeInfo.title}</h3>
-            <h5>{book.volumeInfo.authors}</h5>
-          </div>
-        ))}
-
-        {searchResults.map((book) => (
-          <div key={book.id} className='book-info'>
-            <img
-              src={book.volumeInfo.imageLinks?.thumbnail || ''}
-              alt={book.volumeInfo.title}
-              className='book-cover'
-            />
-            <h3>{book.volumeInfo.title}</h3>
-            <h5>{book.volumeInfo.authors}</h5>
-          </div>
-        ))}
-      </div>
-    </div>
-
     </Router>
   );
 };
