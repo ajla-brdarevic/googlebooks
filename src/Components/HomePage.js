@@ -1,4 +1,3 @@
-// HomePage.js
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
@@ -9,7 +8,6 @@ const HomePage = () => {
   const [randomBooks, setRandomBooks] = useState([]);
 
   useEffect(() => {
-    // Fetch random books on component mount
     const fetchRandomBooks = async () => {
       try {
         const response = await axios.get(
@@ -28,7 +26,6 @@ const HomePage = () => {
   }, []);
 
   const handleSearch = async () => {
-    // Fetch books based on search term
     try {
       const response = await axios.get(
         `https://www.googleapis.com/books/v1/volumes?q=${searchTerm}`
@@ -41,7 +38,6 @@ const HomePage = () => {
   };
 
   const handleKeyDown = (e) => {
-    // Trigger search on Enter key press
     if (e.key === 'Enter') {
       handleSearch();
     }
