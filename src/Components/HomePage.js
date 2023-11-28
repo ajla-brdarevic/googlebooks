@@ -44,7 +44,7 @@ const HomePage = () => {
   };
 
   return (
-    <div>
+    <div className='home'>
       <div className="header">
         <div className="search">
           <input

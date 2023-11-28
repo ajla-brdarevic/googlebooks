@@ -27,12 +27,18 @@ const BookDetails = () => {
   }
 
   return (
-    <div>
-      <h2>{bookDetails.title}</h2>
-      <p>Authors: {bookDetails.authors?.join(', ') || 'Unknown'}</p>
-      <p>Published Date: {bookDetails.publishedDate || 'Unknown'}</p>
-      <p>Description: {bookDetails.description || 'No description available.'}</p>
-      <p>Page Count: {bookDetails.pageCount || 'Unknown'}</p>
+    <div className="app-details">
+      <div className='details'>
+        <img
+          src={bookDetails.imageLinks.thumbnail || ''}
+          className='book-image'
+        />
+        <h2>{bookDetails.title}</h2>
+        <p>Authors: <b>{bookDetails.authors?.join(', ') || 'Unknown'}</b></p>
+        <p>Published Date: <b>{bookDetails.publishedDate || 'Unknown'}</b></p>
+        <p>Description: <b>{bookDetails.description || 'No description available.'}</b></p>
+        <p>Page Count: <b>{bookDetails.pageCount || 'Unknown'}</b></p>
+      </div>
     </div>
   );
 };
