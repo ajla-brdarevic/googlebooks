@@ -1,9 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
-import { useState } from 'react';
 
 const App = () => {
-
   const [searchTerm, setSearchTerm] = useState('');
   const [searchResults, setSearchResults] = useState([]);
 
@@ -29,20 +27,31 @@ const App = () => {
     <div className='app'>
       <div className="header">
         <div className="search">
-          <input type='text' placeholder='Search book' value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)} onKeyDown={handleKeyDown}
+          <input
+            type='text'
+            placeholder='Search book'
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            onKeyDown={handleKeyDown}
           />
         </div>
       </div>
 
       <div className="container">
         {searchResults.map((book) => (
-          <div key={book.id}>{book.volumeInfo.title}</div>
+          <div key={book.id} className='book-info'>
+            <img
+              src={book.volumeInfo.imageLinks?.thumbnail || ''}
+              alt={book.volumeInfo.title}
+              className='book-cover'
+            />
+            <h3>{book.volumeInfo.title}</h3>
+            <h5>{book.volumeInfo.authors}</h5>
+          </div>
         ))}
       </div>
-      
     </div>
   );
-}
+};
 
 export default App;
