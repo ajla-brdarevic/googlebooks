@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-
+import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom';
+import BookDetails from './BookDetails';
 
 const App = () => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -44,6 +45,7 @@ const App = () => {
   };
 
   return (
+    <Router>
     <div className='app'>
       <div className="header">
         <div className="search">
@@ -83,6 +85,8 @@ const App = () => {
         ))}
       </div>
     </div>
+
+    </Router>
   );
 };
 
