@@ -35,10 +35,12 @@ const App = () => {
         </div>
       </div>
 
+      <div className="container">
         <div className="search-results">
-        {searchResults.map((book) => (
-          <div key={book.id}>{book.volumeInfo.title}</div>
-        ))}
+          {searchResults.map((book) => (
+            <div key={book.id}>{book.volumeInfo.title}</div>
+          ))}
+        </div>
       </div>
     </div>
   );
